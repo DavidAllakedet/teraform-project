@@ -1,14 +1,18 @@
-name: Terraform Apply EC2
+name: Terraform EC2
 
 on:
   push:
     branches:
-      - main  # Déclenche sur push sur main
+      - main
 
 jobs:
   terraform:
-    name: Terraform Apply
     runs-on: ubuntu-latest
+
+    env:
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      AWS_DEFAULT_REGION: us-east-1
 
     steps:
       - name: Checkout repo
@@ -17,20 +21,17 @@ jobs:
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v2
         with:
-          terraform_version: 1.7.0
+          terraform_version: 1.9.0
 
       - name: Terraform Init
-        working-directory: infra
         run: terraform init
+        working-directory: infra
 
       - name: Terraform Apply
+        run: |
+          terraform apply -auto-approve \
+            -var="instance_name=neosoft-david" \
+            -var="instance_os=ami-0532be01f26a3de55" \
+            -var="instance_size=t3.micro" \
+            -var="instance_env=dev"
         working-directory: infra
-        env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          AWS_DEFAULT_REGION: ${{ secrets.AWS_DEFAULT_REGION }}
-        run: terraform apply -auto-approve \
-             -var="instance_name=neosoft-david" \
-             -var="instance_os=ami-0532be01f26a3de55" \
-             -var="instance_size=t3.micro" \
-             -var="instance_env=dev"
