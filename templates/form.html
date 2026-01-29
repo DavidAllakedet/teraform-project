@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Créer une Instance EC2</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f7f9fb;
+            padding: 40px;
+            font-family: Georgia, 'Times New Roman', Times, serif;
+        }
+
+        .container {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            max-width: 500px;
+            margin: auto;
+            box-shadow: 0 0 15px rgba(0,0,0,0.1);
+        }
+
+        h2 {
+            text-align: center;
+            color: #333;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #444;
+        }
+
+        input, select, button {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+            font-size: 14px;
+        }
+
+        button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>PROJET IAC SONATEL: CRÉATION D'UNE INSTANCE EC2</h2>
+        <form method="post" action="/trigger">
+
+            <label for="instance_name">Nom de l'instance :</label>
+            <input id="instance_name" name="instance_name" placeholder="Nom instance" required>
+
+            <label for="ami_id">Choisir une image (AMI) :</label>
+            <select id="instance_os" name="instance_os" required>
+                <option value="ami-05fcfb9614772f051">Amazon Linux 2</option>
+                <option value="ami-01f23391a59163da9">Ubuntu 22.04 LTS</option>
+                <option value="ami-0548d28d4f7ec72c5">Debian 12 (Bookworm)</option>
+                <option value="ami-0989038dff76173d3">Red Hat Enterprise Linux 9</option>
+            </select>
+
+            <label for="instance_type">Type d’instance :</label>
+            <select id="instance_size" name="instance_size">
+                <option value="t3.micro">t3.micro</option>
+                <option value="t3.small">t3.small</option>
+                <option value="t3.medium">t3.medium</option>
+            </select>
+
+            <label for="instance_env">Environnement :</label>
+            <select id="instance_env" name="instance_env" required>
+                <option value="dev">Développement</option>
+                <option value="preprod">Préproduction</option>
+                <option value="prod">Production</option>
+            </select>
+
+            <button type="submit">Lancer l’instance</button>
+        </form>
+    </div>
+</body>
+</html>
